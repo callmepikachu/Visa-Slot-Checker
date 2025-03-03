@@ -1,11 +1,11 @@
 {
-    "email": "<your email address>",
-    "password": "<your password>",
-    "scheduleID": "<your schedule id 详情请看README>",
-    "expectedDate": "2022-07-30",
+    "email": "pkqpikachu@gmail.com",
+    "password": "150139_Pkq",
+    "scheduleID": "66429044",
+    "expectedDate": "2032-07-30",
     "notiSoundPath": "./noti.mp3",
-    "sleep": 5,
-    "user-agent": "<your User-Agent 详情请看README>",
+    "sleep": 60,
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
 
     "playSound": true,
 

@@ -31,7 +31,8 @@ def getInfo():
     preSession = session.cookies
 
     soup = BeautifulSoup(response, 'lxml')
-    return soup.find_all('input')[1].attrs['value'], preSession, userAgent
+    result =  soup.find_all('input')[1].attrs['value'], preSession, userAgent
+    return result
 
 
 # send login request, and gain cookie after login. (发送登录请求，获取登录后的cookie)
@@ -199,39 +200,39 @@ def execute():
             }
 
             londonSession = requests.Session()
-
-            # send requests and get london and belfast schedule responses
-            londonResponse = londonSession.get(
-                "https://ais.usvisa-info.com/en-gb/niv/schedule/" + scheduleID + "/appointment/days/17.json?appointments[expedite]=false",
-                headers=headers)
+            #
+            # # send requests and get london and belfast schedule responses
+            # londonResponse = londonSession.get(
+            #     "https://ais.usvisa-info.com/en-gb/niv/schedule/" + scheduleID + "/appointment/days/17.json?appointments[expedite]=false",
+            #     headers=headers)
 
             belfastResponse = requests.get(
                 "https://ais.usvisa-info.com/en-gb/niv/schedule/" + scheduleID + "/appointment/days/16.json?appointments[expedite]=false",
                 headers=headers)
             print("时间: " + str(time.asctime()))
 
-            # london slot check
-            earliestLondon = londonResponse.text[10:20]
-            print('London:')
-            if len(londonResponse.text) == 2:
-                print("呜呜呜伦敦slot都没有啦")
-            elif earliestLondon == "Your sessi" or earliestLondon == "You need t":
-                retry()
-            elif earliestLondon > expectedDate:
-                print('可预定但超过期望时间：' + earliestLondon)
-                print('链接: ' + 'https://ais.usvisa-info.com/en-egb/niv/schedule/' + scheduleID + '/appointment')
-            elif earliestLondon <= expectedDate:
-                print('！！可预定！！London 最早可预定时间: ' + earliestLondon)
-                print('链接: ' + 'https://ais.usvisa-info.com/en-gb/niv/schedule/' + scheduleID + '/appointment')
-                mailContent = '！！可预定！！London 最早可预定时间: ' + earliestLondon + '\n' + '链接: ' + 'https://ais.usvisa-info.com/en-gb/niv/schedule/' + scheduleID + '/appointment'
-                if isSMTP:
-                    sendMail(mailContent)
-                if isMailGun:
-                    mailGun(mailContent)
-                if isPlaysound:
-                    playsound(notiSoundPath)
-            else:
-                retry()
+            # # london slot check
+            # earliestLondon = londonResponse.text[10:20]
+            # print('London:')
+            # if len(londonResponse.text) == 2:
+            #     print("呜呜呜伦敦slot都没有啦")
+            # elif earliestLondon == "Your sessi" or earliestLondon == "You need t":
+            #     retry()
+            # elif earliestLondon > expectedDate:
+            #     print('可预定但超过期望时间：' + earliestLondon)
+            #     print('链接: ' + 'https://ais.usvisa-info.com/en-egb/niv/schedule/' + scheduleID + '/appointment')
+            # elif earliestLondon <= expectedDate:
+            #     print('！！可预定！！London 最早可预定时间: ' + earliestLondon)
+            #     print('链接: ' + 'https://ais.usvisa-info.com/en-gb/niv/schedule/' + scheduleID + '/appointment')
+            #     mailContent = '！！可预定！！London 最早可预定时间: ' + earliestLondon + '\n' + '链接: ' + 'https://ais.usvisa-info.com/en-gb/niv/schedule/' + scheduleID + '/appointment'
+            #     if isSMTP:
+            #         sendMail(mailContent)
+            #     if isMailGun:
+            #         mailGun(mailContent)
+            #     if isPlaysound:
+            #         playsound(notiSoundPath)
+            # else:
+            #     retry()
 
             # belfast slot check
             earliestBelfast = belfastResponse.text[10:20]
